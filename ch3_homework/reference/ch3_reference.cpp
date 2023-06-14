@@ -37,16 +37,23 @@ int main(int argc, char const *argv[])
 
 //hint 3: Try to convert a known point under the Frame1, like (1,1,1), to Frame2 using the rotation matrix, 
 //        and then you can check if your answer is correct intuitively. (The answer is (1, -1, -1))
-    Eigen::Vector3d point_frame1(1,1,1);
-    Eigen::Vector3d point_frame2;
-    point_frame2 = roation_matrix.transpose() * point_frame1;  //p2 = R21 * p1
+    Eigen::Vector3d point_frame2(1,-1,-1);
+    Eigen::Vector3d point_frame1;
+    point_frame1 = roation_matrix * point_frame2;  //p2 = R21 * p1
 
     std::cout << "***************************************" << std::endl;
     std::cout << "point in frame1: " << point_frame1.transpose() << std::endl;
     std::cout << "point in frame2: " << point_frame2.transpose() << std::endl;
     std::cout << "R12: " << std::endl;
     std::cout << roation_matrix<< std::endl;
+     std::cout << "***************************************" << std::endl;
+    std::cout << roation_matrix.transpose()<< std::endl;
+     std::cout << "***************************************" << std::endl;
+    std::cout << roation_matrix.inverse()<< std::endl;
+    std::cout << "***************************************" << std::endl; 
+    std::cout << roation_matrix*roation_matrix.transpose()<< std::endl;
     std::cout << "***************************************" << std::endl;
+    std::cout << roation_matrix*roation_matrix.inverse()<< std::endl;
     std::cout << std::endl;
 
 // /*******************we can also use Fixed axis to solve******************/
