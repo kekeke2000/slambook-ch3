@@ -46,25 +46,37 @@ std::vector<Eigen::Vector2i> convertToPixelCoordinates(const std::vector<Eigen::
 
 int main() {
     // 定义雷达坐标点
+    std::ifstream fin("/home/wkw/rotation/Practical_Homework_for_slambook14/ch3_homework/reference/zuobiao.txt");
     std::vector<Eigen::Vector3d> radar_points;
-    radar_points.emplace_back(10.0, 5.0, 20.0);
-    radar_points.emplace_back(-2.0, 8.0, 15.0);
-    radar_points.emplace_back(6.0, -3.0, 12.0);
+    // radar_points.emplace_back(10.0, 5.0, 20.0);
+    // radar_points.emplace_back(-2.0, 8.0, 15.0);
+    // radar_points.emplace_back(6.0, -3.0, 12.0);
+    double datazb[3] = {0};
+    for (int i = 0; i < 3; i++) {
+        for (auto &a : datazb) 
+        {
+            fin >> a;
+        }
+        radar_points.emplace_back(datazb[0],datazb[1],datazb[2]);
+        std::cout << radar_points[i].transpose() << std::endl;
+    }
+
+    
     std::ifstream file("/home/wkw/rotation/Practical_Homework_for_slambook14/ch3_homework/reference/pose.txt");
     std::ofstream fout("/home/wkw/rotation/Practical_Homework_for_slambook14/ch3_homework/reference/uvresult.txt");
     // 定义雷达坐标系到相机坐标系的转换参数
     Eigen::Matrix3d rotation_matrix;
-    rotation_matrix << 0.866, -0.5, 0,
-                       0.5, 0.866, 0,
-                       0, 0, 1;
+    // rotation_matrix << 0.866, -0.5, 0,
+    //                    0.5, 0.866, 0,
+    //                    0, 0, 1;
 
-    Eigen::Vector3d translation_vector(1.0, 2.0, 3.0);
-    Eigen::Quaterniond q = Eigen::Quaterniond(rotation_matrix);
-    std::cout<<q.coeffs().transpose()<<std::endl;
+    // Eigen::Vector3d translation_vector(1.0, 2.0, 3.0);
+    // Eigen::Quaterniond q = Eigen::Quaterniond(rotation_matrix);
+    // std::cout<<q.coeffs().transpose()<<std::endl;
 
-     Eigen::Isometry3d T = Eigen::Isometry3d::Identity();                // 虽然称为3d，实质上是4＊4的矩阵
-     T.rotate(q);                                     // 按照rotation_vector进行旋转 xyzw
-     T.pretranslate(translation_vector); 
+    //  Eigen::Isometry3d T = Eigen::Isometry3d::Identity();                // 虽然称为3d，实质上是4＊4的矩阵
+    //  T.rotate(q);                                     // 按照rotation_vector进行旋转 xyzw
+    //  T.pretranslate(translation_vector); 
 
     double data[7] = {0};
     Eigen::Isometry3d T1 = Eigen::Isometry3d::Identity();
